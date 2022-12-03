@@ -42,8 +42,8 @@ class MazeCell{
   PVector location;  //center of the grid
   ArrayList<Wall> walls; 
   ArrayList<MazeCell> neighbors;
-  //Hashmap with walls to neighbors (check the wall, check the neighbor for being visited, add)
-  //HashMap<Wall, MazeCell> seperatingWalls;
+  ArrayList<MazeCell> connectedCells;
+  
   boolean visited;
   boolean started;
   MazeCell parentCell;
@@ -52,7 +52,8 @@ class MazeCell{
     location = center;
     walls = new ArrayList<Wall>();
     neighbors = new ArrayList<MazeCell>();
-    //seperatingWalls = new HashMap<Wall, MazeCell>();
+    connectedCells = new ArrayList<MazeCell>();
+    
     visited = false;
     started = false;
     //addFakeWalls();
@@ -70,34 +71,35 @@ class MazeCell{
       walls.add(new Wall(bottomLeft, topLeft));
   }
   
-  /*
-  void addTopNeighbor(MazeCell neighbor){
+  void addLeftWall(){
     PVector topLeft = new PVector (location.x - (GRID_SIZE/2), location.y - (GRID_SIZE/2));
-    PVector topRight = new PVector (location.x + (GRID_SIZE/2), location.y - (GRID_SIZE/2));
-    
-    seperatingWalls.put(new Wall(topLeft, topRight), neighbor);
-  }
-  
-  void addRightNeighbor(MazeCell neighbor){
-    PVector topRight = new PVector (location.x + (GRID_SIZE/2), location.y - (GRID_SIZE/2));
-    PVector bottomRight = new PVector (location.x + (GRID_SIZE/2), location.y + (GRID_SIZE/2));
-    
-    seperatingWalls.put(new Wall(topRight, bottomRight), neighbor);
-  }
-  
-  void addBottomNeighbor(MazeCell neighbor){
-    PVector bottomRight = new PVector (location.x + (GRID_SIZE/2), location.y + (GRID_SIZE/2));
     PVector bottomLeft = new PVector (location.x - (GRID_SIZE/2), location.y + (GRID_SIZE/2));
     
-    seperatingWalls.put(new Wall(bottomRight, bottomLeft), neighbor);
+    walls.add(new Wall(bottomLeft, topLeft));
   }
   
-  void addLeftNeighbor(MazeCell neighbor){
-    PVector bottomLeft = new PVector (location.x - (GRID_SIZE/2), location.y + (GRID_SIZE/2));
+  void addRightWall(){
+    PVector topRight = new PVector (location.x + (GRID_SIZE/2), location.y - (GRID_SIZE/2));
+      PVector bottomRight = new PVector (location.x + (GRID_SIZE/2), location.y + (GRID_SIZE/2));
+      
+      walls.add(new Wall(topRight, bottomRight));
+  }
+  
+  void addTopWall(){
     PVector topLeft = new PVector (location.x - (GRID_SIZE/2), location.y - (GRID_SIZE/2));
-    
-    seperatingWalls.put(new Wall(bottomLeft, topLeft), neighbor);
-  }*/
+      PVector topRight = new PVector (location.x + (GRID_SIZE/2), location.y - (GRID_SIZE/2));
+      
+      walls.add(new Wall(topLeft, topRight));
+  }
+  
+  void addBottomWall(){
+    PVector bottomRight = new PVector (location.x + (GRID_SIZE/2), location.y + (GRID_SIZE/2));
+      PVector bottomLeft = new PVector (location.x - (GRID_SIZE/2), location.y + (GRID_SIZE/2));
+      
+      walls.add(new Wall(bottomRight, bottomLeft));
+  }
+  
+  
 
 }
 
@@ -185,13 +187,8 @@ class Map
       MazeCell startCell = nodearray[int(random(0,numberOfColumns))][int(random(0,numberOfRows))];
       startCell.visited = true;
       startCell.started = true;
-      //startCell.parentCell = new MazeCell(new PVector(69, 69));
-      /*
-      for (Wall w : startCell.walls)
-      {
-         primWalls.add(w);
-      }*/
       
+      //Adding the first posibilities for Prims
       for (MazeCell n : startCell.neighbors)
       {
         n.parentCell = startCell;
@@ -206,6 +203,7 @@ class Map
           //add wall to mazeWalls
         } else {
           //remove wall between this and parent node
+          
           for (MazeCell n : checkNode.neighbors)
             {
               if(n.visited == false){
@@ -214,41 +212,57 @@ class Map
               }
             }
           checkNode.visited = true;
+          
+          //Informs parent and child that they are connected
+          checkNode.connectedCells.add(checkNode.parentCell);
+          checkNode.parentCell.connectedCells.add(checkNode);
         }
             
         primNodes.remove(checkNodeIndex);
       }
-      
-      /*
-      Iterator mapIterator = startCell.seperatingWalls.entrySet().iterator();
-      
-      for (Map.Entry<String,Integer> mapElement : startCell.seperatingWalls.entrySet()) {
-            String key = mapElement.getKey();
- 
-            // Adding some bonus marks to all the students
-            int value = (mapElement.getValue() + 10);
- 
-            // Printing above marks corresponding to
-            // students names
-            System.out.println(key + " : " + value);
+      //All cells should have the cells theyve actually been connected to now
+      //gonna do it slow for now
+      for(int i = 0; i < numberOfRows; i++){
+        for(int j = 0; j < numberOfColumns; j++){
+          //nodearray[j][i];
+          boolean left = true;
+          boolean right = true;
+          boolean up = true;
+          boolean down = true;
+          //print("\nMaze Cell has x connections " + nodearray[j][i].connectedCells.size());
+          for(MazeCell MC : nodearray[j][i].connectedCells){
+            if(nodearray[j][i].location.x < MC.location.x){
+              right = false;
+              //print("\n \t connection found to the right");
+              //nodearray[j][i].addRightWall();
+            } else if(nodearray[j][i].location.x > MC.location.x){
+              left = false;
+              //nodearray[j][i].addLeftWall();
+            } else if(nodearray[j][i].location.y < MC.location.y){
+              down = false;
+              //nodearray[j][i].addBottomWall();
+            } else if(nodearray[j][i].location.y > MC.location.y){
+              up = false;
+              //nodearray[j][i].addTopWall();
+            }
+          }
+          if(left){
+              nodearray[j][i].addLeftWall();
+            }
+            if(right){
+              nodearray[j][i].addRightWall();
+            }
+            if(up){
+              nodearray[j][i].addTopWall();
+            }
+            if(down){
+              nodearray[j][i].addBottomWall();
+            }
+          
+          
         }
-      */
-      
-      //Main LOOP coming in
-      while(!primWalls.isEmpty()){  //Continues while there are walls in the list
-        int checkWallIndex = int(random(0,primWalls.size()));
-        Wall checkWall = primWalls.get(checkWallIndex);  //Might just be able to remove it here and not at the bottom
-        
-        //this is the tricky bit, find what nodes it connects and check if they have both been visited
-          //if not 
-            //add the walls of that node to primswalls
-            //mark the new node as visited
-          //if so
-            //Add the wall to mazewalls
-            
-        primWalls.remove(checkWallIndex);
       }
-      
+     
       //Prims
       //Place all walls
       //Start at random node, marking as visited
