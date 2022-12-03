@@ -5,7 +5,6 @@
 ArrayList<PVector> waypoints = new ArrayList<PVector>();
 int lastt;
 
-
 Map map = new Map();
 
 void setup() {
