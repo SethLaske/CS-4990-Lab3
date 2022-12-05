@@ -7,10 +7,14 @@ int lastt;
 
 Map map = new Map();
 
+Boid billy;
+
 void setup() {
   size(800, 600);
   randomSeed(0);
   map.generate(-2);
+    billy = new Boid(BILLY_START, BILLY_START_HEADING, BILLY_MAX_SPEED, BILLY_MAX_ROTATIONAL_SPEED, BILLY_MAX_ACCELERATION, BILLY_MAX_ROTATIONAL_ACCELERATION);
+  
 }
 
 
