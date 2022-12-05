@@ -5,6 +5,20 @@
 ArrayList<PVector> waypoints = new ArrayList<PVector>();
 int lastt;
 
+int mapnr = 0;
+  
+NavMesh nm = new NavMesh();
+
+boolean entering_path = false;
+
+boolean show_nav_mesh = true;
+
+boolean show_waypoints = true;
+
+boolean show_help = false;
+
+boolean flocking_enabled = false;
+
 Map map = new Map();
 
 Boid billy;

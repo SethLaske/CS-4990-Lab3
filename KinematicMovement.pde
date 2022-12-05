@@ -64,4 +64,13 @@ class KinematicMovement
       return rotational_velocity;
    }
    // End public methods
+      boolean isReachable(PVector point)
+   {
+       if (!isPointInPolygon(point, outline)) return false;
+       for (Obstacle o: obstacles)
+       {
+           if (isPointInPolygon(point, o.walls)) return false;
+       }
+       return true;
+   }
 }
