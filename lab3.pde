@@ -19,6 +19,8 @@ boolean show_help = false;
 boolean flocking_enabled = false;
 
 Map map = new Map();
+NavMesh nm = new NavMesh();
+
 
 Boid billy;
 
@@ -96,4 +98,13 @@ void draw() {
   lastt = millis();
   
   map.update(dt);  
+  
+  //Implementation to show waypoints
+  if(waypoints!=null){
+    for(PVector point: waypoints)
+    {
+      stroke(255);
+      circle(point.x, point.y, 5);
+    }
+  }
 }

@@ -28,7 +28,7 @@ class KinematicMovement
      PVector destination = PVector.add(this.position, PVector.mult(velocity, dt));
      // check for map collisions; only move if no collisions
      //if (!map.collides(this.position, destination))
-     //    this.position = destination;
+     this.position = destination;
      this.heading += this.rotational_velocity*dt;
      this.heading = normalize_angle(this.heading);
    }
