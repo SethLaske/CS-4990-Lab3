@@ -171,9 +171,9 @@ class Boid
    void seek(PVector target)
    {
      //handles a single target point, if more points are being added the route is calculated as each waypoint is added
-      ArrayList<PVector> path = nm.findPath(billy.kinematic.position, target);
-      this.target = path.get(0);
-      this.followpoints = path;
+      //ArrayList<PVector> path = nm.findPath(billy.kinematic.position, target);
+      //this.target = path.get(0);
+      //this.followpoints = path;
    }
    
    void follow(ArrayList<PVector> waypoints)

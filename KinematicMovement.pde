@@ -27,8 +27,8 @@ class KinematicMovement
      
      PVector destination = PVector.add(this.position, PVector.mult(velocity, dt));
      // check for map collisions; only move if no collisions
-     if (!map.collides(this.position, destination))
-         this.position = destination;
+     //if (!map.collides(this.position, destination))
+     //    this.position = destination;
      this.heading += this.rotational_velocity*dt;
      this.heading = normalize_angle(this.heading);
    }
@@ -64,13 +64,14 @@ class KinematicMovement
       return rotational_velocity;
    }
    // End public methods
-      boolean isReachable(PVector point)
-   {
-       if (!isPointInPolygon(point, outline)) return false;
-       for (Obstacle o: obstacles)
-       {
-           if (isPointInPolygon(point, o.walls)) return false;
-       }
-       return true;
-   }
+   //Old is reachable method. Will tell whether or not a point is reachable. Not needed for this new project.
+//      boolean isReachable(PVector point)
+//   {
+//       if (!isPointInPolygon(point, outline)) return false;
+//       for (Obstacle o: obstacles)
+//       {
+//           if (isPointInPolygon(point, o.walls)) return false;
+//       }
+//       return true;
+//   }
 }

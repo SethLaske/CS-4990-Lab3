@@ -34,8 +34,6 @@ int CRUMB_INTERVAL = 200;
 // How big are the crumbs?
 int CRUMB_SIZE = 2;
 
-// use for debugging, if you want to see where walls start/end (a circle is drawn closer to the end)
-boolean SHOW_WALL_DIRECTION = false;
 
 // How many obstacles should be generated *at most*
 // Note that maps 2-4 are pretty dense and obstacles

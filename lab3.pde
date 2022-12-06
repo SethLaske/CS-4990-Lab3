@@ -6,8 +6,7 @@ ArrayList<PVector> waypoints = new ArrayList<PVector>();
 int lastt;
 
 int mapnr = 0;
-  
-NavMesh nm = new NavMesh();
+
 
 boolean entering_path = false;
 
@@ -27,7 +26,7 @@ void setup() {
   size(800, 600);
   randomSeed(0);
   map.generate(-2);
-    billy = new Boid(BILLY_START, BILLY_START_HEADING, BILLY_MAX_SPEED, BILLY_MAX_ROTATIONAL_SPEED, BILLY_MAX_ACCELERATION, BILLY_MAX_ROTATIONAL_ACCELERATION);
+  billy = new Boid(BILLY_START, BILLY_START_HEADING, BILLY_MAX_SPEED, BILLY_MAX_ROTATIONAL_SPEED, BILLY_MAX_ACCELERATION, BILLY_MAX_ROTATIONAL_ACCELERATION);
   
 }
 
