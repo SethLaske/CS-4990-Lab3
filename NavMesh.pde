@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.*;
 /// In this file you will implement your navmesh and pathfinding. 
-
+//Leave in project 3, remove recursive functions. Cuts up the map and makes sure its traversable. FindPath is the key functionS
+//consolidate navmesh and map into one file probably
 
 /// This node representation is just a suggestion
 class Node

@@ -1,5 +1,5 @@
 import java.util.*;
-
+//Map doesnt need anything from lab 1
 class Wall
 {
    PVector start;
