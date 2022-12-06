@@ -1,40 +1,6 @@
 import java.util.*;
 //Map doesnt need anything from lab 1
-class Wall
-{
-   PVector start;
-   PVector end;
-   PVector normal;
-   PVector direction;
-   float len;
-   
-   Wall(PVector start, PVector end)
-   {
-      this.start = start;
-      this.end = end;
-      direction = PVector.sub(this.end, this.start);
-      len = direction.mag();
-      direction.normalize();
-      normal = new PVector(-direction.y, direction.x);
-   }
-   
-   // Return the mid-point of this wall
-   PVector center()
-   {
-      return PVector.mult(PVector.add(start, end), 0.5);
-   }
-   
-   void draw()
-   {
-       strokeWeight(3);
-       line(start.x, start.y, end.x, end.y);
-       if (SHOW_WALL_DIRECTION)
-       {
-          PVector marker = PVector.add(PVector.mult(start, 0.2), PVector.mult(end, 0.8));
-          circle(marker.x, marker.y, 5);
-       }
-   }
-}
+
 /// You do not have to change this file, but you can, if you want to add a more sophisticated generator.
 class Wall
 {
@@ -132,27 +98,6 @@ void AddPolygonScaled(ArrayList<Wall> walls, PVector[] nodes)
     }
 }
 
-class Obstacle
-{
-   ArrayList<Wall> walls;
-   Obstacle()
-   {
-      walls = new ArrayList<Wall>();
-      PVector origin = new PVector(width*0.1 + random(width*0.65), height*0.12 + random(height*0.65));
-      if (origin.x < 100 && origin.y > 500) origin.add(new PVector(150,0));
-      PVector[] nodes = new PVector[] {};
-      float angle = random(100)/100.0;
-      for (int i = 0; i < 3 + random(2) && angle < TAU; ++i)
-      {
-          float distance = height*0.05 + random(height*0.15);
-          nodes = (PVector[])append(nodes, PVector.add(origin, new PVector(cos(-angle)*distance, sin(-angle)*distance)));
-          angle += 1 + random(25)/50;
-      }
-      AddPolygon(walls, nodes);
-   }
-   
-   
-}
 
 // Given a (closed!) polygon surrounded by walls, tests if the
 // given point is inside that polygon.
