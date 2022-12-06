@@ -12,7 +12,7 @@ int GRID_SIZE = 100;
 int BOID_SIZE = 20;
 
 // Where does billy start?
-PVector BILLY_START = new PVector(50,500);
+PVector BILLY_START = new PVector(50,550);
 float BILLY_START_HEADING = 0;
 
 // How fast can billy go and turn?

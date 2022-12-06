@@ -34,7 +34,7 @@ void mousePressed()
 {
   if (show_help) return;
   PVector target = new PVector(mouseX, mouseY);
-  if (!map.isReachable(target)) return;
+  //if (!map.isReachable(target)) return;
   if (mouseButton == LEFT)
   {
      
